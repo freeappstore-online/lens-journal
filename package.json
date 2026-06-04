@@ -1,0 +1,15 @@
+{
+  "name": "lens-journal",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
+  "engines": { "node": ">=22" },
+  "pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+  "repository": { "type": "git", "url": "git+https://github.com/freeappstore-online/lens-journal.git" },
+  "scripts": {
+    "dev": "pnpm --filter @lens-journal/web dev",
+    "build": "pnpm --filter @lens-journal/web build",
+    "preview": "pnpm --filter @lens-journal/web preview",
+    "typecheck": "pnpm --filter @lens-journal/web exec tsc -b",
+    "test": "pnpm --filter @lens-journal/web exec tsc -b"
+  }
+}

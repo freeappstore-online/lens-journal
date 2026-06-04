@@ -39,14 +39,16 @@ export default defineConfig({
         ],
       },
       manifest: {
-        name: 'lens-journal',
-        short_name: 'lens-journal',
-        description: 'Free lens-journal app — part of FreeAppStore',
+        name: 'Lens Journal',
+        short_name: 'Lens Journal',
+        description: 'Photography session journal — log shots, track settings, improve faster',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
         theme_color: '#111111',
         orientation: 'any',
+        // @ts-ignore — FreeAppStore platform field, not in standard ManifestOptions
+        min_viewport_width: 360,
         icons: [
           { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
           { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

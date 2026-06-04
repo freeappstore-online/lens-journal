@@ -104,13 +104,15 @@
 }
 
 html {
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
 }
 
 body {
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
   background:
     radial-gradient(circle at top left, var(--bg-blob-1), transparent 32%),
     radial-gradient(circle at top right, var(--bg-blob-2), transparent 30%),
@@ -150,11 +152,25 @@ body::after {
   background: var(--glow-cool);
 }
 
+/* Viewport-fit layout: clamp entire app to 100dvh, scroll inside main */
 #root {
-  min-height: 100dvh;
+  height: 100%;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   isolation: isolate;
+  overflow: hidden;
+}
+
+/* Shell outer div — height-clamp so it never pushes body scroll */
+#root > div {
+  height: 100%;
+}
+
+/* Shell <main> — sole scrolling container */
+#root > div > main {
+  overflow-y: auto;
+  min-height: 0;
+  overscroll-behavior: contain;
 }
 
 button, a, nav, [role="button"], label {

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:freeappstore.online)",
+      "Bash(python3 -c \"import sys,json; p=json.load\\(sys.stdin\\); print\\(json.dumps\\({k:p[k] for k in ['exports','main','module','types'] if k in p}, indent=2\\)\\)\")",
+      "Bash(pnpm build *)",
+      "Bash(pnpm dev *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(fas check *)",
+      "Bash(fas screencheck *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(pnpm add *)",
+      "Bash(npx playwright *)",
+      "Bash(python3 -c \"import sys,json; json.load\\(sys.stdin\\); print\\('valid JSON'\\)\")",
+      "Bash(cat /home/tommy/.nvm/versions/node/v22.22.3/bin/../lib/node_modules/@freeappstore/cli/node_modules/@freeappstore/compliance/dist/checks/claude-md-slim.js)",
+      "Read(//home/tommy/.nvm/versions/node/v22.22.3/lib/node_modules/@freeappstore/cli/node_modules/@freeappstore/compliance/dist/checks/**)"
+    ]
+  }
+}

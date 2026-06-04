@@ -1,40 +1,35 @@
-# template-standalone
+# Lens Journal
 
-The standalone-app template used by [`fas init`](https://github.com/freeappstore-online/platform/tree/main/packages/cli) to scaffold new free apps for [FreeAppStore](https://freeappstore.online).
+A free, offline-first photography session journal. Log your shots with full EXIF data, tag scenes, track your sweet-spot settings over time, and export your data anytime.
 
-You almost certainly want to use the CLI, not clone this directly:
+**Live app:** [lens-journal.freeappstore.online](https://lens-journal.freeappstore.online)
 
-```bash
-npm i -g @freeappstore/cli
-fas init my-app
-```
+## Features
 
-The CLI clones this template, replaces every `freeappstore` placeholder with your app id, runs `git init`, and makes the first commit — the result is a runnable app you can `pnpm dev` immediately.
+- **Shot logging** — record aperture, shutter speed, ISO, focal length, and lens per shot
+- **Scene tags** — portrait, landscape, street, macro, night, wildlife, architecture, travel, sports, abstract
+- **Learning notes** — attach a per-session note ("next time try f/8", "increase ISO at dusk")
+- **Stats** — see your most-used settings, sweet-spot aperture/shutter/ISO, top lenses, and tag distribution
+- **Export / Import** — download your full journal as JSON; import it back on any device
+- **Offline-first** — all data stored in `localStorage`; works with no network after first load
+- **PWA** — installable on iOS and Android from the browser
 
-## What's in here
-
-- `web/` — Vite + React + TypeScript app, ESM-only, no Tailwind config needed (utility classes via inline styles + the `Shell` component).
-- `web/src/components/Shell.tsx` — sidebar layout with brand fonts (Manrope + Fraunces), CSS variables (`--paper`, `--ink`, `--accent`), and dark-mode support out of the box.
-- `web/src/main.tsx` — React entry point.
-- `web/index.html` — links Manrope + Fraunces, sets PWA meta tags, references the manifest.
-- `web/public/manifest.json` — PWA manifest with `name`, `display`, `start_url`.
-- `package.json` — pnpm workspace, `dev` / `build` / `typecheck` / `test` scripts.
-- `.github/workflows/compliance.yml` — runs the same checks as `fas check` on every PR. Source of truth lives in the [`@freeappstore/compliance`](https://www.npmjs.com/package/@freeappstore/compliance) package.
-
-## Cloning manually (not recommended)
-
-If you really want to scaffold by hand:
+## Development
 
 ```bash
-git clone https://github.com/freeappstore-online/template-standalone my-app
-cd my-app
-# Replace freeappstore → my-app in package.json, web/index.html, web/src/main.tsx, README, etc.
-rm -rf .git && git init
-pnpm install && pnpm dev
+pnpm install
+pnpm dev        # http://localhost:5173
+pnpm build      # production build → web/dist/
 ```
 
-Then run `fas publish` to provision repo + hosting + DNS, or open the [submission form](https://github.com/freeappstore-online/submissions/issues/new) for maintainer review.
+## Tech
+
+- Vite + React 19 + TypeScript
+- Tailwind CSS v4 (utility classes)
+- [`@freeappstore/sdk`](https://freeappstore.online) — auth, theme, UI components
+- `vite-plugin-pwa` + Workbox — service worker, offline precache
 
 ## License
 
-MIT.
+MIT — free to use, fork, and self-host.  
+Part of [FreeAppStore](https://freeappstore.online) — no ads, no tracking.

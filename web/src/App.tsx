@@ -1,5 +1,5 @@
 import { initApp } from '@freeappstore/sdk'
-import { Shell, BuildInfo } from '@freeappstore/sdk/ui'
+import { Shell, BuildInfo, useStandalone } from '@freeappstore/sdk/ui'
 import { useState } from 'react'
 import { useJournalStore } from './store'
 import { JournalView } from './views/JournalView'
@@ -12,10 +12,15 @@ const fas = initApp({ appId: 'lens-journal' })
 
 type Tab = 'journal' | 'stats' | 'settings'
 
+// BottomNav height + Footer height (standalone) = 3.75rem + 2rem = 5.75rem
+const NAV_CLEARANCE = '3.75rem'
+const NAV_CLEARANCE_STANDALONE = '5.75rem'
+
 export default function App() {
   const store = useJournalStore()
   const [tab, setTab] = useState<Tab>('journal')
   const [sessionId, setSessionId] = useState<string | null>(null)
+  const standalone = useStandalone()
 
   const inSession = tab === 'journal' && sessionId !== null
   const session = sessionId ? (store.sessions.find(s => s.id === sessionId) ?? null) : null
@@ -25,12 +30,16 @@ export default function App() {
     setSessionId(null)
   }
 
+  const navClearance = standalone ? NAV_CLEARANCE_STANDALONE : NAV_CLEARANCE
+
   return (
     <Shell app={fas} appName="Lens Journal" showThemeToggle>
       <div
         style={{
           flex: 1,
-          paddingBottom: inSession ? 'env(safe-area-inset-bottom)' : 'calc(3.75rem + env(safe-area-inset-bottom))',
+          paddingBottom: inSession
+            ? 'env(safe-area-inset-bottom)'
+            : `calc(${navClearance} + env(safe-area-inset-bottom))`,
         }}
       >
         {tab === 'journal' && !inSession && (

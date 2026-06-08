@@ -1,3 +1,5 @@
+import { useStandalone } from '@freeappstore/sdk/ui'
+
 type Tab = 'journal' | 'stats' | 'settings'
 
 interface Props {
@@ -11,12 +13,20 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'settings', label: 'Settings', icon: <GearIcon /> },
 ]
 
+// Footer height = paddingTop(0.5rem) + lineHeight(~0.75rem) + paddingBottom(0.5rem + safe-area)
+// ≈ 2rem + env(safe-area-inset-bottom). Lift BottomNav above it when standalone.
+const FOOTER_HEIGHT = '2rem'
+
 export function BottomNav({ active, onChange }: Props) {
+  const standalone = useStandalone()
+
   return (
     <nav
       style={{
         position: 'fixed',
-        bottom: 0,
+        bottom: standalone
+          ? `calc(${FOOTER_HEIGHT} + env(safe-area-inset-bottom))`
+          : 0,
         left: 0,
         right: 0,
         zIndex: 50,
@@ -25,7 +35,8 @@ export function BottomNav({ active, onChange }: Props) {
         background: 'var(--glass-strong)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        paddingBottom: 'env(safe-area-inset-bottom)',
+        // Safe-area is handled by Footer when standalone; apply here otherwise
+        paddingBottom: standalone ? 0 : 'env(safe-area-inset-bottom)',
       }}
     >
       {TABS.map(t => (

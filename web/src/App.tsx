@@ -12,9 +12,10 @@ const fas = initApp({ appId: 'lens-journal' })
 
 type Tab = 'journal' | 'stats' | 'settings'
 
-// BottomNav height + Footer height (standalone) = 3.75rem + 2rem = 5.75rem
+// BottomNav button area ≈ 3.75rem. In standalone the nav paddingBottom grows by
+// Footer visible height (1.75rem), so total clearance = 3.75rem + 1.75rem = 5.5rem.
 const NAV_CLEARANCE = '3.75rem'
-const NAV_CLEARANCE_STANDALONE = '5.75rem'
+const NAV_CLEARANCE_STANDALONE = '5.5rem'
 
 export default function App() {
   const store = useJournalStore()

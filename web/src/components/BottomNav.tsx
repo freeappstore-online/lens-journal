@@ -13,9 +13,12 @@ const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
   { key: 'settings', label: 'Settings', icon: <GearIcon /> },
 ]
 
-// Footer height = paddingTop(0.5rem) + lineHeight(~0.75rem) + paddingBottom(0.5rem + safe-area)
-// ≈ 2rem + env(safe-area-inset-bottom). Lift BottomNav above it when standalone.
-const FOOTER_HEIGHT = '2rem'
+// Footer (standalone-only) CSS height = paddingTop(0.5rem) + text(~0.75rem) + paddingBottom(0.5rem + safe-area)
+// ≈ 1.75rem + env(safe-area-inset-bottom).
+// Keep BottomNav at bottom:0 always. In standalone, extend its paddingBottom so
+// the button row sits above the Footer while the Footer overlays the padding zone —
+// one compact bar, not two stacked bars.
+const FOOTER_VISIBLE = '1.75rem'
 
 export function BottomNav({ active, onChange }: Props) {
   const standalone = useStandalone()
@@ -24,9 +27,7 @@ export function BottomNav({ active, onChange }: Props) {
     <nav
       style={{
         position: 'fixed',
-        bottom: standalone
-          ? `calc(${FOOTER_HEIGHT} + env(safe-area-inset-bottom))`
-          : 0,
+        bottom: 0,
         left: 0,
         right: 0,
         zIndex: 50,
@@ -35,8 +36,9 @@ export function BottomNav({ active, onChange }: Props) {
         background: 'var(--glass-strong)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        // Safe-area is handled by Footer when standalone; apply here otherwise
-        paddingBottom: standalone ? 0 : 'env(safe-area-inset-bottom)',
+        paddingBottom: standalone
+          ? `calc(${FOOTER_VISIBLE} + env(safe-area-inset-bottom))`
+          : 'env(safe-area-inset-bottom)',
       }}
     >
       {TABS.map(t => (
